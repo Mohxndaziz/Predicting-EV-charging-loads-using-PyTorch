@@ -2,7 +2,7 @@
 
 This project aims to predict electric vehicle (EV) charging energy consumption (in kWh) using neural networks. The model combines EV charging session data with local traffic distribution data to understand how traffic patterns might influence charging behavior.
 
-###📊 Datasets Used
+📊 Datasets Used
 
 Dataset 1: EV Charging Reports
 
@@ -48,7 +48,7 @@ weekdays_plugin
 Scaling: Standardized all features and target using StandardScaler
 Train/Test split: 80/20 split with random seed 42
 
-###🤖 Neural Network Architecture
+🤖 Neural Network Architecture
 
 Input Layer: 9 features
 Hidden Layer 1: 56 neurons (ReLU activation)
@@ -75,7 +75,7 @@ SELSBAKK - Traffic volume at location 3
 MOHOLT RAMPE 2 - Traffic volume at location 4
 Jonsvannsveien vest for Steinanvegen - Traffic volume at location 5
 
-###📈 Results
+📈 Results
 
 Model Performance (Test Set)
 
@@ -90,13 +90,13 @@ MAE (kWh): 8.01
 R² Score: ≈0.00
 Interpretation: The neural network shows modest improvement over the simple baseline predictor, with 11% variance explained (R² = 0.109) and about 10% reduction in MSE compared to predicting the mean.
 
-###💾 Model Persistence
+💾 Model Persistence
 
 The trained model weights are saved as model_state_dict.pth for portability and future inference.
 
 🔧 Technical Details
 
-###Dependencies
+Dependencies
 
 Python 3.12.12
 Core libraries:
@@ -111,7 +111,7 @@ Reproducibility
 Seed set to 48 for all random operations (Python, NumPy, PyTorch)
 Ensures consistent results across runs
 
-###🚀 Usage Example
+🚀 Usage Example
 
 1. Prepare your data:
 
@@ -150,7 +150,7 @@ Standard scaling of all features and target variable
 Removal of rows with missing or invalid values (45 rows dropped)
 
 
-###📁 File Structure
+📁 File Structure
 
 ├── code.ipynb                              # Main notebook
 ├── Dataset 1_EV charging reports.csv       # Charging session data
@@ -158,7 +158,7 @@ Removal of rows with missing or invalid values (45 rows dropped)
 ├── model_state_dict.pth                    # Trained model weights
 └── README.md                               # This file
 
-###Future Improvements:
+Future Improvements:
 
 - Experiment with deeper architectures or different activation functions
 - Add regularization techniques (dropout, L2 regularization)
