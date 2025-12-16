@@ -127,7 +127,7 @@ jupyter notebook code.ipynb
    import torch
    import torch.nn as nn
    
-   # Define model architecture
+4. Define model architecture
    model = nn.Sequential(
        nn.Linear(9, 56),
        nn.ReLU(), 
@@ -136,11 +136,11 @@ jupyter notebook code.ipynb
        nn.Linear(28, 1)
    )
    
-   # Load trained weights
+5.  Load trained weights
    model.load_state_dict(torch.load('model_state_dict.pth'))
    model.eval()
 
-4. Data Preprocessing
+6. Data Preprocessing
 The pipeline includes:
 
 Temporal alignment of charging and traffic data
