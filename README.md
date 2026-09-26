@@ -1,54 +1,45 @@
-📋 Project Overview
+# 📋 Project Overview
 
 This project aims to predict electric vehicle (EV) charging energy consumption (in kWh) using neural networks. The model combines EV charging session data with local traffic distribution data to understand how traffic patterns might influence charging behavior.
 
-📊 Datasets Used
+## Datasets Used
 
-Dataset 1: EV Charging Reports
+### Dataset 1: EV Charging Reports
+* **Rows:** 6,878 entries
+* **Features:** 15 columns including:
+  * Session metadata (`session_ID`, `Garage_ID`, `User_ID`, `User_type`)
+  * Timing information (`Start_plugin`, `End_plugout`, `Duration_hours`)
+  * Energy consumption (`El_kWh`)
+  * Temporal categories (`month_plugin`, `weekdays_plugin`, `Plugin_category`, `Duration_category`)
 
-Rows: 6,878 entries
-Features: 15 columns including:
+### Dataset 6: Local Traffic Distribution
+* **Rows:** 10,248 entries
+* **Features:** 7 columns including:
+  * Time intervals (`Date_from`, `Date_to`)
+  * Traffic counts at 5 locations (`KROPPAN BRU`, `MOHOLTLIA`, `SELSBAKK`, `MOHOLT RAMPE 2`, `Jonsvannsveien vest for Steinanvegen`)
 
-Session metadata (session_ID, Garage_ID, User_ID, User_type)
-Timing information (Start_plugin, End_plugout, Duration_hours)
-Energy consumption (El_kWh)
-Temporal categories (month_plugin, weekdays_plugin, Plugin_category, Duration_category)
-Dataset 6: Local Traffic Distribution
+## Data Processing Pipeline
 
-Rows: 10,248 entries
-Features: 7 columns including:
+### 1. Data Merging
+* Used `pd.merge_asof()` to merge charging sessions with nearest hourly traffic data.
+* Applied a 1-hour tolerance window for matching.
+* Required datetime conversion and sorting of both datasets.
 
-Time intervals (Date_from, Date_to)
-Traffic counts at 5 locations (KROPPAN BRU, MOHOLTLIA, SELSBAKK, MOHOLT RAMPE 2, Jonsvannsveien vest for Steinanvegen)
-🛠️ Data Processing Pipeline
+### 2. Data Cleaning
+* **Columns removed:** 12 columns not needed for analysis (`session_ID`, `Garage_ID`, etc.)
+* **Data type conversion:**
+  * Converted comma-separated numeric strings to float (e.g., `"0,3"` → `0.3`).
+  * Applied `pd.to_numeric()` with `errors='coerce'` to handle invalid values.
+* **Rows dropped:** 45 rows with missing values (final dataset: 6,833 rows).
 
-1. Data Merging
+### 3. Feature Engineering
+* **Categorical encoding:** Applied `LabelEncoder` to:
+  * `User_type` (Private/Other)
+  * `month_plugin`
+  * `weekdays_plugin`
+* **Scaling:** Standardized all features and target using `StandardScaler`.Train/Test split: 80/20 split with random seed 42
 
-Used pd.merge_asof() to merge charging sessions with nearest hourly traffic data
-Applied 1-hour tolerance window for matching
-Required datetime conversion and sorting of both datasets
-
-2. Data Cleaning
-
-Columns removed: 12 columns not needed for analysis (session_ID, Garage_ID, etc.)
-
-Data type conversion:
-
-Converted comma-separated numeric strings to float (e.g., "0,3" → 0.3)
-Applied pd.to_numeric() with errors='coerce' to handle invalid values
-Rows dropped: 45 rows with missing values (final dataset: 6,833 rows)
-
-3. Feature Engineering
-
-Categorical encoding: Applied LabelEncoder to:
-
-User_type (Private/Other)
-month_plugin
-weekdays_plugin
-Scaling: Standardized all features and target using StandardScaler
-Train/Test split: 80/20 split with random seed 42
-
-🤖 Neural Network Architecture
+ Neural Network Architecture
 
 Input Layer: 9 features
 Hidden Layer 1: 56 neurons (ReLU activation)
@@ -75,7 +66,7 @@ SELSBAKK - Traffic volume at location 3
 MOHOLT RAMPE 2 - Traffic volume at location 4
 Jonsvannsveien vest for Steinanvegen - Traffic volume at location 5
 
-📈 Results
+ Results
 
 Model Performance (Test Set)
 
@@ -90,11 +81,11 @@ MAE (kWh): 8.01
 R² Score: ≈0.00
 Interpretation: The neural network shows modest improvement over the simple baseline predictor, with 11% variance explained (R² = 0.109) and about 10% reduction in MSE compared to predicting the mean.
 
-💾 Model Persistence
+ Model Persistence
 
 The trained model weights are saved as model_state_dict.pth for portability and future inference.
 
-🔧 Technical Details
+  Technical Details
 
 Dependencies
 
@@ -111,7 +102,7 @@ Reproducibility
 Seed set to 48 for all random operations (Python, NumPy, PyTorch)
 Ensures consistent results across runs
 
-🚀 Usage Example
+  Usage Example
 
 1. Prepare your data:
 
