@@ -1,4 +1,4 @@
-# 📋 Project Overview
+# Project Overview
 
 This project aims to predict electric vehicle (EV) charging energy consumption (in kWh) using neural networks. The model combines EV charging session data with local traffic distribution data to understand how traffic patterns might influence charging behavior.
 
