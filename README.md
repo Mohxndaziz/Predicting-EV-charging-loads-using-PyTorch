@@ -38,87 +38,82 @@ This project aims to predict electric vehicle (EV) charging energy consumption (
   * `month_plugin`
   * `weekdays_plugin`
 * **Scaling:** Standardized all features and target using `StandardScaler`.Train/Test split: 80/20 split with random seed 42
+## Neural Network Architecture
 
- Neural Network Architecture
+* **Input Layer:** 9 features
+* **Hidden Layer 1:** 56 neurons (ReLU activation)
+* **Hidden Layer 2:** 28 neurons (ReLU activation)
+* **Output Layer:** 1 neuron (energy consumption in kWh)
 
-Input Layer: 9 features
-Hidden Layer 1: 56 neurons (ReLU activation)
-Hidden Layer 2: 28 neurons (ReLU activation)
-Output Layer: 1 neuron (energy consumption in kWh)
+### Training Configuration
 
-Training Configuration:
+* **Loss Function:** Mean Squared Error (MSE)
+* **Optimizer:** Adam (learning rate: 0.007)
+* **Epochs:** 3,000
+* **Train/Test Split:** 80/20
 
-Loss Function: Mean Squared Error (MSE)
-Optimizer: Adam (learning rate: 0.007)
-Epochs: 3,000
-Train/Test Split: 80/20
-
-Features:
+### Features
 The model uses the following 9 input features:
 
-User_type - Type of user (encoded)
-Duration_hours - Charging session duration
-month_plugin - Month when charging started (encoded)
-weekdays_plugin - Day of week (encoded)
-KROPPAN BRU - Traffic volume at location 1
-MOHOLTLIA - Traffic volume at location 2
-SELSBAKK - Traffic volume at location 3
-MOHOLT RAMPE 2 - Traffic volume at location 4
-Jonsvannsveien vest for Steinanvegen - Traffic volume at location 5
+* `User_type` – Type of user (encoded)
+* `Duration_hours` – Charging session duration
+* `month_plugin` – Month when charging started (encoded)
+* `weekdays_plugin` – Day of week (encoded)
+* `KROPPAN BRU` – Traffic volume at location 1
+* `MOHOLTLIA` – Traffic volume at location 2
+* `SELSBAKK` – Traffic volume at location 3
+* `MOHOLT RAMPE 2` – Traffic volume at location 4
+* `Jonsvannsveien vest for Steinanvegen` – Traffic volume at location 5
 
- Results
+## Results
 
-Model Performance (Test Set)
+### Model Performance (Test Set)
+* **MSE (scaled):** 0.8194
+* **MSE (kWh):** 115.90
+* **MAE (kWh):** 7.20
+* **R² Score:** 0.1092
+* **R² Score:** 0.1092
 
-MSE (scaled): 0.8194
-MSE (kWh): 115.90
-MAE (kWh): 7.20
-R² Score: 0.1092
-Baseline Comparison (Predicting mean of training data)
+### Baseline Comparison (Predicting mean of training data)
+* **MSE (kWh):** 130.11
+* **MAE (kWh):** 8.01
+* **R² Score:** ≈0.00
 
-MSE (kWh): 130.11
-MAE (kWh): 8.01
-R² Score: ≈0.00
-Interpretation: The neural network shows modest improvement over the simple baseline predictor, with 11% variance explained (R² = 0.109) and about 10% reduction in MSE compared to predicting the mean.
+**Interpretation:** The neural network shows modest improvement over the simple baseline predictor, with 11% variance explained (\(R^2 = 0.109\)) and about 10% reduction in MSE compared to predicting the mean.
 
- Model Persistence
+## Model Persistence
 
-The trained model weights are saved as model_state_dict.pth for portability and future inference.
+The trained model weights are saved as `model_state_dict.pth` for portability and future inference.
 
-  Technical Details
+## Technical Details
 
-Dependencies
+### Dependencies
+* Python 3.12.12
+* **Core libraries:**
+  * `torch` (PyTorch for neural networks)
+  * `pandas` (data manipulation)
+  * `numpy` (numerical operations)
+  * `scikit-learn` (preprocessing and metrics)
+  * `random` (reproducibility)
 
-Python 3.12.12
-Core libraries:
+### Reproducibility
+* Seed set to `48` for all random operations (Python, NumPy, PyTorch).
+* Ensures consistent results across runs.
 
-torch (PyTorch for neural networks)
-pandas (data manipulation)
-numpy (numerical operations)
-scikit-learn (preprocessing and metrics)
-random (reproducibility)
-Reproducibility
+## Usage Example
 
-Seed set to 48 for all random operations (Python, NumPy, PyTorch)
-Ensures consistent results across runs
+1. **Prepare your data:**
+   Place `Dataset 1_EV charging reports.csv` and `Dataset 6_Local traffic distribution.csv` in the project directory.
 
-  Usage Example
-
-1. Prepare your data:
-
-Place Dataset 1_EV charging reports.csv and Dataset 6_Local traffic distribution.csv in the project directory
-
-
-2. Run the notebook:
-
-jupyter notebook code.ipynb
-
-3. Load the trained model:
+2. **Run the notebook:**
+   ```bash
+   jupyter notebook code.ipynb
+3. **Load the trained model:**
 
    import torch
    import torch.nn as nn
    
-4. Define model architecture
+4. **Define model architecture**
    model = nn.Sequential(
        nn.Linear(9, 56),
        nn.ReLU(), 
@@ -127,11 +122,11 @@ jupyter notebook code.ipynb
        nn.Linear(28, 1)
    )
    
-5.  Load trained weights
+5.  **Load trained weights**
    model.load_state_dict(torch.load('model_state_dict.pth'))
    model.eval()
 
-6. Data Preprocessing
+6. **Data Preprocessing**
 The pipeline includes:
 
 Temporal alignment of charging and traffic data
@@ -141,7 +136,7 @@ Standard scaling of all features and target variable
 Removal of rows with missing or invalid values (45 rows dropped)
 
 
-📁 File Structure
+## File Structure
 ```
 ├── code.ipynb                               # Main notebook
 ├── Dataset 1_EV charging reports.csv        # Charging session data
@@ -149,7 +144,7 @@ Removal of rows with missing or invalid values (45 rows dropped)
 ├── model_state_dict.pth                     # Trained model weights
 └── README.md                                # This file
 ```
-Future Improvements:
+## Future Improvements:
 
 - Experiment with deeper architectures or different activation functions
 - Add regularization techniques (dropout, L2 regularization)
