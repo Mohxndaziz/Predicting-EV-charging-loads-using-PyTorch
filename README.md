@@ -151,13 +151,13 @@ Removal of rows with missing or invalid values (45 rows dropped)
 
 
 📁 File Structure
-
-├── code.ipynb                              # Main notebook
-├── Dataset 1_EV charging reports.csv       # Charging session data
+```
+├── code.ipynb                               # Main notebook
+├── Dataset 1_EV charging reports.csv        # Charging session data
 ├── Dataset 6_Local traffic distribution.csv # Traffic data
-├── model_state_dict.pth                    # Trained model weights
-└── README.md                               # This file
-
+├── model_state_dict.pth                     # Trained model weights
+└── README.md                                # This file
+```
 Future Improvements:
 
 - Experiment with deeper architectures or different activation functions
